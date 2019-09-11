@@ -1,0 +1,23 @@
+import requests
+from lxml import etree
+with open("豆瓣音乐.txt","a",encoding="utf-8") as f:
+  for i in range (10):
+
+    headers={"User_Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36"}
+    url = "https://movie.douban.com/top250?start={}".format(i * 25)
+    data=requests.get(url,headers=headers).text
+    s=etree.HTML(data)
+
+    musics=s.xpath('//*[@id="content"]/div/div[1]/ol/li')
+
+
+    for music in musics:
+
+
+        music_name=music.xpath('div/div[2]/div[1]/a/span[1]/text()')[0].strip()
+        music_author=music.xpath('div/div[2]/div[2]/p[1]/text()')[0].strip()
+        f.write("电影名：{}\n".format(music_name))
+        f.write("具体信息 :{}\n".format(music_author))
+
+
+        f.write("\n")
