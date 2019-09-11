@@ -1,0 +1,14 @@
+import requests
+from lxml import etree
+
+url='https://movie.douban.com/subject/3319755/'
+data=requests.get(url).text
+s=etree.HTML(data)
+film=s.xpath('//*[@id="content"]/h1/span[1]/text()')
+daoyan=s.xpath('//*[@id="celebrities"]/ul/li[1]/div/span[1]/a/text()')
+nanzhu=s.xpath('//*[@id="celebrities"]/ul/li[3]/div/span[1]/a/text()')
+nvzhu=s.xpath('//*[@id="celebrities"]/ul/li[2]/div/span[1]/a/text()')
+print("这个电影的名字是：",film)
+print("导演：",daoyan)
+print("男主:",nanzhu)
+print("女主:",nvzhu)
